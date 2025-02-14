@@ -32,15 +32,24 @@ function fluid_particle(xp, yp)
   this.y = yp;
   this.vx = 0;
   this.vy = 0;
-  this.damp = 3;
+  this.damp = 10;
   
-  this.update = function(new_vx, new_vy)
+  this.step = function(new_v)
   {
-    this.vx = new_vx;
-    this.vy = new_vy;
+    this.vx = -new_v.x;
+    this.vy = -new_v.y;
     
     this.x += this.vx / this.damp;
     this.y += this.vy / this.damp;
+  }
+  
+  this.update = function(new_v)
+  {
+    this.vx = -new_v.x;
+    this.vy = -new_v.y;
+    
+    //this.x += this.vx / this.damp;
+    //this.y += this.vy / this.damp;
   }
   
   this.display = function() {
@@ -52,6 +61,18 @@ function fluid_particle(xp, yp)
     line(this.x, this.y, this.x + this.vx, this.y+this.vy);
   }
   
-  this.dirto = function()
+  this.dirto = function(dx, dy)
+  {
+    return createVector(this.x-dx, this.y-dy);
+  }
   
+}
+
+function mouseClicked()
+{
+  for(let i=0; i < particles.length; i++)
+    {
+      particles[i].step(particles[i].dirto(mouseX, mouseY));
+      particles[i].display();
+    }
 }
