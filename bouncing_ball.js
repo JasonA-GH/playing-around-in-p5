@@ -20,6 +20,7 @@ function setup() {
 function draw() {
   background(225);
     circle(x, y, radius);
+  text(vel, 50, 50);
   if(!isHeld)
     {
   vel.add(0, 9.807);
@@ -31,6 +32,8 @@ function draw() {
         vel.x += 0.1;
       if(abs(vel.x) < 0.1)
         vel.x = 0;
+      if(abs(vel.y) < 0.1)
+        vel.y = 0;
   if(y >= canY-radius/2)
     {
       y = canY-radius/2;
