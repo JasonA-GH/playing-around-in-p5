@@ -7,7 +7,7 @@ isHeld = false;
 canX = 800;
 canY = 800;
 
-
+bounce = 5;
 
 function setup() {
   createCanvas(canX, canY);
@@ -25,20 +25,28 @@ function draw() {
   vel.add(0, 9.807);
       x += vel.x;
   y += vel.y;
+      if(vel.x > 0)
+      vel.x -= 0.1;
+      else if(vel.x < 0)
+        vel.x += 0.1;
+      if(abs(vel.x) < 0.1)
+        vel.x = 0;
   if(y >= canY-radius/2)
     {
       y = canY-radius/2;
       vel.y = -vel.y;
     }
-      if(x >= canX-radius/2)
+      if(x >= canX-radius/2 || x <= radius/2)
         {
+          if(x >= canX-radius/2)
           x = canX-radius/2;
+          else
+            x = radius/2;
           vel.x = -vel.x;
-        }
-      if(x <= radius/2)
-        {
-          x = radius/2;
-          vel.x = -vel.x;
+          if(vel.x > 0)
+      vel.x -= bounce;
+      else if(vel.x < 0)
+        vel.x += bounce;
         }
     }
   
